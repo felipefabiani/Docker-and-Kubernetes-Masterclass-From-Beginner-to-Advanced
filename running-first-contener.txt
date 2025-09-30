@@ -55,8 +55,13 @@ create folder DOCKERFILE-nginx and Dockerfile file
 docker build -t web_server_image .
 
 
-Module 8 
+Module 7
 
 create folder containerize-express-app
 npm init -y
 npm install express@4.19.2 body-parser@1.20.2 --save-exact
+
+Module 8
+create folder UsingDockerignoreToSkipFiles
+
+docker build -t hello-from-node .
