@@ -34,3 +34,22 @@ docker pull nginx:1.27.0
 docker run -d -p 8091:80 --name web-server2 nginx:1.27.0
 docker exec -it web-server2 sh 
 go to /usr/share/nginx/html/index.html and edit the file
+
+Module 6
+docker login -u felipefabiani
+
+docker build -t simple_hello_world .
+docker images
+    REPOSITORY                       TAG           IMAGE ID       CREATED         SIZE
+    simple_hello_world               latest        fa57bc395307   2 weeks ago     78.1MB
+
+docker tag simple_hello_world:latest felipefabiani/simple_hello_world:v0.0.1
+docker images
+    REPOSITORY                         TAG           IMAGE ID       CREATED         SIZE
+    felipefabiani/simple_hello_world   v0.0.1        fa57bc395307   2 weeks ago     78.1MB
+
+docker push felipefabiani/simple_hello_world:v0.0.1
+
+create folder DOCKERFILE-nginx and Dockerfile file
+
+docker build -t web_server_image .
