@@ -49,3 +49,7 @@ docker images
     felipefabiani/simple_hello_world   v0.0.1        fa57bc395307   2 weeks ago     78.1MB
 
 docker push felipefabiani/simple_hello_world:v0.0.1
+
+create folder DOCKERFILE-nginx and Dockerfile file
+
+docker build -t web_server_image .
