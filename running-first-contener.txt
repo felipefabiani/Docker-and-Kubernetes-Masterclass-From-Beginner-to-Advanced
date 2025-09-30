@@ -13,3 +13,18 @@ docker ps --filter name=web-server
 docker rm web-server (Remove/Delete containers)
 
 docker stop $(docker ps -q)
+--- 
+
+docker run -d -p 8090:80 --name web-server nginx
+docker logs -f web-server
+curl http://localhost:8090/
+
+docker exec -it web-server /bin/bash
+
+--- creating an image--- 
+vim Dockerfile
+docker build .
+docker images 
+    REPOSITORY                       TAG           IMAGE ID       CREATED        SIZE
+    <none>                           <none>        fa57bc395307   2 weeks ago    78.1MB
+docker run fa57bc395307
