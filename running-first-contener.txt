@@ -1,0 +1,15 @@
+docker pull nginx
+docker run nginx
+docker run -d nginx
+docker ps
+docker run -d -p 8090:80 --name web-server nginx
+curl http://localhost:8090/
+docker ps
+docker stop web-server
+docker start web-server
+docker images      (List images)
+docker ps -a       (List containers)
+docker ps --filter name=web-server
+docker rm web-server (Remove/Delete containers)
+
+docker stop $(docker ps -q)
