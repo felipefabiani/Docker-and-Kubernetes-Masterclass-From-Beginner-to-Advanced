@@ -67,3 +67,8 @@ create folder UsingDockerignoreToSkipFiles
 docker build -t hello-from-node .
 docker build -t test .
 docker run -d -p 5000:5000 -e APP_NAME="TEST" --name test-5000 test
+
+
+create module8/03-multstage
+docker build -t multstage .
+docker run -p 3000:3000 -d multsatage
