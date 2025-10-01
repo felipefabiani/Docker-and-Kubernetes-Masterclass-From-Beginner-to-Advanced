@@ -3,9 +3,12 @@ WORKDIR /app
 
 COPY package*.json .
 RUN npm ci
+COPY src ./src
+COPY tsconfig.json tscontig.json
+RUN npm run build
 
 FROM gcr.io/distroless/nodejs22
 WORKDIR /app
 COPY --from=build /app/node_modules ./node_modules
-COPY src ./src
-CMD ["src/index.js"]
+COPY --from=build /app/dist ./dist
+CMD ["dist/index.js"]
