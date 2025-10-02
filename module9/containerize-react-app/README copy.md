@@ -47,3 +47,18 @@ build
 4 directories, 15 files
 ```
 
+---- 
+
+`docker build -t react-app:nginx .`
+
+`docker run --rm -d -p 9001:80 react-app:nginx`
+
+browse to localhost:9000
+
+Change App.tsx file
+
+`docker build -t react-app:nginx-blue .`
+
+`docker run --rm -d -p 9001:80 react-app:nginx-blue`
+
+browse to localhost:9001 to see new version

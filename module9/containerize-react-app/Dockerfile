@@ -8,3 +8,6 @@ COPY . .
 RUN npm run build
 
 # 2. Serve the buldle with an HTTP server
+FROM nginx:1.27.0
+COPY --from=build /app/build /usr/share/nginx/html
+
