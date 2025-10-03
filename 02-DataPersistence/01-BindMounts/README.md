@@ -16,3 +16,9 @@
 `docker exec -it website-main sh`
 
 => `echo "Hello world!" > /usr/share/nginx/html/index.html`
+
+---
+
+`docker volume ls`
+
+`docker volume inspect website-data`
