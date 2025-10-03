@@ -4,9 +4,8 @@
 
 ### Adding Root Credentials to MongoDB
 
-`docker volume create key-value-data`
-
-`docker network create key-value-net`
+if need add execution mod to the scripts `chmod +X *.sh`
 
 `./start-db.sh`
 
+`./cleanup.sh`
