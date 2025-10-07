@@ -1,5 +1,5 @@
-MONGODB_IMAGE=mongodb/mongodb-community-server
-MONGODB_TAG=7.0-ubuntu2204
+MONGODB_IMAGE="mongodb/mongodb-community-server"
+MONGODB_TAG="7.0-ubuntu2204"
 source .env.db
 
 #Root credentials
@@ -35,7 +35,8 @@ docker run -d --rm --name $DB_CONTAINER_NAME \
     -e KEY_VALUE_DB=$KEY_VALUE_DB \
     -e KEY_VALUE_USER=$KEY_VALUE_USER \
     -e KEY_VALUE_PASSWORD=$KEY_VALUE_PASSWORD \
+    -p $LOCALHOST_PORT:$CONTAINER_PORT \
     -v $VOLUME_NAME:$VOLUME_CONTAINER_PATH \
-    -v ./db-conifg/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro \
+    -v $full_path:/docker-entrypoint-initdb.d/mongo-init.js:ro \
     --network $NETWORK_NAME \
     $MONGODB_IMAGE:$MONGODB_TAG

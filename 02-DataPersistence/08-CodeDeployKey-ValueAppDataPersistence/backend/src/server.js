@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(bodyParser.json());
@@ -13,12 +13,12 @@ app.get('/helth', async (req, res) => {
 
 console.log('Connecting to MongoDB...');
 // MongoDB connection
-mongoose.connect('mongodb://mongo:27017/keyValueDB', {
+mongoose.connect(`mongodb://${process.env.MONGODB_HOST}/${process.env.KEY_VALUE_DB}`, {
     auth: {
-        username: 'key-value-user',
-        password: 'key-value-password'
+        username: process.env.KEY_VALUE_USER,
+        password: process.env.KEY_VALUE_PASSWORD
     },
-    connectTimeoutMS: 500
+    connectTimeoutMS: 5000
 })
 .then(() => {
     console.log('MongoDB connected')

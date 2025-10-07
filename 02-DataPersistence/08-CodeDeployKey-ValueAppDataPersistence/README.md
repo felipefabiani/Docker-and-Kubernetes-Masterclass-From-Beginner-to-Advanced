@@ -19,3 +19,10 @@ if need add execution mod to the scripts `chmod +X *.sh`
 `npm init -y`
 
 `npm i express@4.19.2 mongoose@8.5.1 body-parser@1.20.2 --save-exact`
+
+---
+
+`docker build -t key-value-backend -f Dockerfile.dev .`
+
+`docker run --rm -d --name backend --network key-value-net key-value-backend`
+
