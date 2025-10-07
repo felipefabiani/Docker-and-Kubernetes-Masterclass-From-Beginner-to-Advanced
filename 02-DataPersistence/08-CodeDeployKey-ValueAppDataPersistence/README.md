@@ -26,3 +26,16 @@ if need add execution mod to the scripts `chmod +X *.sh`
 
 `docker run --rm -d --name backend --network key-value-net key-value-backend`
 
+`docker exec -it mongodb mongosh -u root-user -p root-password --authenticationDatabase admin`
+use key-value-db
+db.getUsers()
+
+
+db = db.getSiblingDB("key-value-db");
+db.createUser({
+  user: "key-value-user",
+  pwd: "key-value-password",
+  roles: [{ role: "readWrite", db: "key-value-db" }]
+});
+
+docker run mongodb -v ${PWD}/db-config/:/docker-entrypoint-initdb.d/ cp -R ./ /srv/build

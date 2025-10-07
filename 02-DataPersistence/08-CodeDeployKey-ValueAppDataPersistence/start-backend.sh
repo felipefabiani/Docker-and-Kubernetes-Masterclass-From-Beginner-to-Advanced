@@ -17,9 +17,6 @@ if [ "$(docker ps -q -f name=$BACKEND_CONTAINER_NAME)" ]; then
 fi
 
 
-full_path=$(pwd)
-full_path+="/db-config/mongo-init.js"
-echo $full_path
 
 docker build -t $BACKEND_IMAGE_NAME \
     -f backend/Dockerfile.db \

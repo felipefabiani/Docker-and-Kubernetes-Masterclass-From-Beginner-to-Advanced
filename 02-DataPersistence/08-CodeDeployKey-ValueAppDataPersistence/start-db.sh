@@ -29,6 +29,11 @@ if [ "$(docker ps -q -f name=$DB_CONTAINER_NAME)" ]; then
     exit 1
 fi
 
+# map the correct path for Windows
+# 1. Get the full path of the mongo-init.js file
+full_path="$(pwd -W)/db-config/mongo-init.js"
+echo $full_path
+
 docker run -d --rm --name $DB_CONTAINER_NAME \
     -e MONGO_INITDB_ROOT_USERNAME=$ROOT_USER \
     -e MONGO_INITDB_ROOT_PASSWORD=$ROOT_PASSWORD \
@@ -39,4 +44,4 @@ docker run -d --rm --name $DB_CONTAINER_NAME \
     -v $VOLUME_NAME:$VOLUME_CONTAINER_PATH \
     -v $full_path:/docker-entrypoint-initdb.d/mongo-init.js:ro \
     --network $NETWORK_NAME \
-    $MONGODB_IMAGE:$MONGODB_TAG
+    $MONGODB_IMAGE:$MONGODB_TAG 
