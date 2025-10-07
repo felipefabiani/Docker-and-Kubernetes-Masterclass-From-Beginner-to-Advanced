@@ -7,8 +7,8 @@ const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(bodyParser.json());
-app.get('/helth', async (req, res) => {
-    res.status(200).send('OK');
+app.get('/health', async (req, res) => {
+    res.status(200).send('UP');
 });
 
 console.log('Connecting to MongoDB...');

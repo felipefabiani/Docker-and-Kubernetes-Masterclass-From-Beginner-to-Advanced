@@ -19,7 +19,7 @@ fi
 
 
 docker build -t $BACKEND_IMAGE_NAME \
-    -f backend/Dockerfile.db \
+    -f backend/Dockerfile.dev \
     backend
 
 docker run -d --rm --name $BACKEND_CONTAINER_NAME \
