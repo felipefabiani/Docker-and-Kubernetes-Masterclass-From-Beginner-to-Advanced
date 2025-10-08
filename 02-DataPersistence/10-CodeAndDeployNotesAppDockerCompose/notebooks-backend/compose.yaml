@@ -11,7 +11,7 @@ services:
       - DB_URL=mongodb://${NOTEBOOKS_DB_USER}:${NOTEBOOKS_DB_PASSWORD}@notebooks-db/${NOTEBOOKS_DB_NAME}
 
     networks:
-      - netbooks-net
+      - notebooks-net
     depends_on:
       - notebooks-db
     develop:
@@ -35,10 +35,10 @@ services:
         source: notebooks-data
         target: /data/db
     networks:
-      - netbooks-net
+      - notebooks-net
 
 volumes:
   notebooks-data:
 
 networks:
-  netbooks-net:
+  notebooks-net:
