@@ -32,6 +32,6 @@ docker run -d --name $BACKEND_CONTAINER_NAME \
     -e PORT=$CONTAINER_PORT \
     -e MONGODB_HOST=$MONGODB_HOST \
     -p $LOCALHOST_PORT:$CONTAINER_PORT \
-    -v ./backend/src:/app/src \
+    -v $backend_path:/app/src \
     --network $NETWORK_NAME \
     $BACKEND_IMAGE_NAME
