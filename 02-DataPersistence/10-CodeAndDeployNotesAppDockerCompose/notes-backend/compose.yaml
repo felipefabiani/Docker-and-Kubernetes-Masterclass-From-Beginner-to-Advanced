@@ -3,7 +3,11 @@ services:
   notes:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
+      target: development
+    image: notes-backend:dev
+    container_name: notes-api
+
     ports:
       - "3002:80"
     environment:
@@ -18,6 +22,7 @@ services:
           target: /app/src
   notes-db:
     image: mongodb/mongodb-community-server:7.0-ubuntu2204
+    container_name: notes-db
     ports:
       - "27017:27017"
     env_file:

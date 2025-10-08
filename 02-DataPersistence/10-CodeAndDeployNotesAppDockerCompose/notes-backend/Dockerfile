@@ -1,13 +1,18 @@
-# 1. Build our production bundle
-FROM node:22-alpine AS build
+FROM node:22-alpine as development
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY package*.json .
 RUN npm ci
 COPY . .
+CMD ["npm", "run", "dev"]
 
-RUN npm run build
+FROM node:22-alpine as prod-dependencies
+WORKDIR /app
+COPY package*.json .
+RUN npm ci --only=production
 
-# 2. Serve the buldle with an HTTP server
-FROM nginx:1.27.0
-COPY --from=build /app/build /usr/share/nginx/html
+FROM gcr.io/distroless/nodejs22 AS production
+WORKDIR /app
+COPY --from=prod-dependencies /app/node_modules node_modules
+COPY src src
+CMD ["src/server.js"]
 

@@ -2,23 +2,8 @@
 
 ## Docker compose
 
-`docker compose version`
+multage docker containing the development docker and production.
 
-`docker run --rm --name mongosh -it --network 09-dockercompose_default mongodb/mongodb-community-server:7.0-ubuntu2204 mongosh mongodb://09-dockercompose-db-1`
-=> `show dbs;`
+`docker build -t notes-backend:dev --taget=development`
 
----
-
-`docker-compose ps`
-
-`docker-compose ps -a`
-
-`docker-compose down`
-
-`docker-compose up`
-
----
-
-`docker-compose up --build`
-
-`docker-compose up --watch`
+`docker build -t notes-backend:prod --taget=production`

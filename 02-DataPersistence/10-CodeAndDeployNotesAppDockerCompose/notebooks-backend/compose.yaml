@@ -3,7 +3,10 @@ services:
   notebooks:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
+      target: development
+    image: notebooks-backend:dev
+    container_name: notebooks-api
     ports:
       - "3000:80"
     environment:
@@ -21,6 +24,7 @@ services:
           target: /app/src
   notebooks-db:
     image: mongodb/mongodb-community-server:7.0-ubuntu2204
+    container_name: notebooks-db
     ports:
       - "27017:27017"
     env_file:
