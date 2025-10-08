@@ -34,12 +34,44 @@ storeRouter.get('/:key', async (req, res, next) => {
         next(err);
     }
 });
-storeRouter.put('/:key', (req, res) => {
-    return res.status(200).send(`Key ${req.params.key} updated`);
+storeRouter.put('/:key', async (req, res, next) => {
+    const { key } = req.params;
+    const { value } = req.body;
+    if (!value) {
+        return next(new AppError('Value is required', 400));
+    }
+
+    try {
+        const entry = await KeyValue.findOneAndUpdate(
+            { key }, 
+            { value },
+             { new: true });
+
+        if (!entry) {
+            return next(new AppError('Key not found', 404));   
+        }
+        return res.status(200).json({
+            message: 'Value updated successfully',
+            key: entry.key,
+            value: entry.value 
+        });
+
+    } catch (error) {
+       return next(error);
+    }
 });
-storeRouter.delete('/:key', (req, res) => {
-    return res.status(200).send(`Key ${req.params.key} deleted`);
-});
+storeRouter.delete('/:key', async (req, res) => {
+    const { key } = req.params;
+    try {
+        const entry = await KeyValue.findOneAndDelete({ key });
+        if (!entry) {
+            return next(new AppError('Key not found', 404));
+        }
+        return res.status(204).send();
+    } catch (error) {
+        return next(error);
+    }
+}); 
 
 module.exports = {
     storeRouter
