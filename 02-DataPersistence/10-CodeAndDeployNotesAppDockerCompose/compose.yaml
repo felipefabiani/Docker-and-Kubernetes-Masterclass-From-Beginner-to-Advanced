@@ -1,2 +1,4 @@
-name: notes-rest-api
-services:
+name: notes-app
+include:
+  - notebooks-backend/compose.yaml
+  - notes-backend/compose.yaml
