@@ -15,6 +15,12 @@ services:
       - key-value-net
     depends_on:
       - db
+    develop:
+      watch:
+        - action: sync
+          path: ./backend/src
+          target: /app/src
+
   db:
     image: mongodb/mongodb-community-server:7.0-ubuntu2204
     ports:
