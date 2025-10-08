@@ -39,3 +39,8 @@ db.createUser({
 });
 
 docker run mongodb -v ${PWD}/db-config/:/docker-entrypoint-initdb.d/ cp -R ./ /srv/build
+
+
+---
+
+`npm i --save-exact --save-dev nodemon@3.1.4`

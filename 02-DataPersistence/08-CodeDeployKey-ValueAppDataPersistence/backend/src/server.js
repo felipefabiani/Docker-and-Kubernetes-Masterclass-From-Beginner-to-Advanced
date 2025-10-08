@@ -1,15 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
+const { storeRouter } = require('./routes/store');
+const { healthRouter } = require('./routes/health');
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(bodyParser.json());
-app.get('/health', async (req, res) => {
-    res.status(200).send('UP');
-});
+app.use('/store', storeRouter);
+app.use('/health', healthRouter);
 
 console.log('Connecting to MongoDB...');
 // MongoDB connection
