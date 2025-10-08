@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const { storeRouter } = require('./routes/store');
 const { healthRouter } = require('./routes/health');
+const { errorHandler } = require('./middlewares/errorHandler');
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -10,7 +12,7 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use('/store', storeRouter);
 app.use('/health', healthRouter);
-
+app.use(errorHandler);
 console.log('Connecting to MongoDB...');
 // MongoDB connection
 mongoose.connect(`mongodb://${process.env.MONGODB_HOST}/${process.env.KEY_VALUE_DB}`, {
