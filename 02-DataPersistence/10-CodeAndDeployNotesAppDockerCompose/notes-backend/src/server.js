@@ -1,12 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
+const bodyParser = require('body-parser');
+const { noteRouter } = require('./routes');
+const { errorHandler } = require('./middlewares/errorHandler');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.get('/api/notes', (req, res) => {
-    res.send('Hello from Notes Backend!');
-});
+app.use(bodyParser.json());
+app.use('/api/notes', noteRouter);
+app.use(errorHandler);
 
 console.log('Connecting to MongoDB...');
 console.log('Using connection string:', process.env.DB_URL);

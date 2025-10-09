@@ -4,9 +4,6 @@ const { AppError } = require('./appError');
 const { Notebook } = require('./models.js');
 const { validateIdHandler } = require('./middlewares/validateIdHandler');
 
-const validateId = (req, res, next) => {
-   
-};    
 
 // Create new notebook: POST /api/notebooks
 notebookRouter.post('/', async (req, res, next) => {
