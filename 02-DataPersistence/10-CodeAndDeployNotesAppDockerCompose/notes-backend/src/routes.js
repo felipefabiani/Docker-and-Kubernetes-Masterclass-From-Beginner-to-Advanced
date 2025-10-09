@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require('axios');
+const mongoose = require('mongoose');
 const { AppError } = require('./appError');
 const { Note } = require('./models.js');
 const { validateIdHandler } = require('./middlewares/validateIdHandler.js');
@@ -10,14 +11,32 @@ const noteRouter = express.Router();
 noteRouter.post('/', async (req, res, next) => {
     try {
         const { title, content, notebookId } = req.body;
-        if (notebookId) {
-            // Verify notebook exists via notebooks service
+        let validatedNotebookId = null;
+        if (!validatedNotebookId) {
+            console.info({
+                message: 'Notebook Id note provided. Storing note without notebook association.'
+            });
+        } else if (!mongoose.Types.ObjectId.isValid(notebookId)) {
+            return next(new AppError('Invalid notebookId format', 400));
+        } else {
             try {
                 await axios.get(`${notebookServiceUrl}${notebookId}`);
             } catch (error) {
-                return next(new AppError('Associated notebook not found', 400));
-            }
+                const jsonError = error.toJSON();
+                if (jsonError.status === 404) {
+                    return next(new AppError('Notebook with provided ID does not exist', 400));
+                } else {
+                    console.error({
+                        message: 'Error validating notebookId:',
+                        notebookId,
+                        error: error.message
+                    });
+                }
+             } finally {
+                validatedNotebookId = notebookId;
+             }
         }
+
 
         if (!title || !content) {
             return next(new AppError("'Title', 'content' fields are required", 400));
