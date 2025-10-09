@@ -3,5 +3,7 @@ services:
     networks:
       - notes-app-network
   notes:
+    environment:
+      - NOTEBOOKS_API_URL=http://notebooks/api/notebooks/
     networks:
       - notes-app-network

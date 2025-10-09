@@ -1,13 +1,24 @@
 const express = require('express');
+const axios = require('axios');
 const { AppError } = require('./appError');
 const { Note } = require('./models.js');
 const { validateIdHandler } = require('./middlewares/validateIdHandler.js');
 
+const notebookServiceUrl = process.env.NOTEBOOKS_API_URL;
 const noteRouter = express.Router();
 // Create new note: POST /api/notes
 noteRouter.post('/', async (req, res, next) => {
     try {
         const { title, content, notebookId } = req.body;
+        if (notebookId) {
+            // Verify notebook exists via notebooks service
+            try {
+                await axios.get(`${notebookServiceUrl}${notebookId}`);
+            } catch (error) {
+                return next(new AppError('Associated notebook not found', 400));
+            }
+        }
+
         if (!title || !content) {
             return next(new AppError("'Title', 'content' fields are required", 400));
         }
