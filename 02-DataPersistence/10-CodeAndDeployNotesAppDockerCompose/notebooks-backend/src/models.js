@@ -1,5 +1,5 @@
 const monsoose = require('mongoose');
-const Schema = monsoose;
+const Schema = monsoose.Schema;
 
 const notebookSchema = new Schema({
     name: { type: String, required: true },
