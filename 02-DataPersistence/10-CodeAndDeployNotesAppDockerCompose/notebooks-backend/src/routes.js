@@ -2,7 +2,11 @@ const express = require('express');
 const notebookRouter = express.Router();
 const { AppError } = require('./appError');
 const { Notebook } = require('./models.js');
-const { default: mongoose } = require('mongoose');
+const { validateIdHandler } = require('./middlewares/validateIdHandler');
+
+const validateId = (req, res, next) => {
+   
+};    
 
 // Create new notebook: POST /api/notebooks
 notebookRouter.post('/', async (req, res, next) => {
@@ -36,14 +40,9 @@ notebookRouter.get('/', async (req, res, next) => {
 });
 
 // Get a specific notebook by ID: GET /api/notebooks/:id
-notebookRouter.get('/:id', async (req, res, next) => {
-    const { id } = req.params;
+notebookRouter.get('/:id', validateIdHandler, async (req, res, next) => {
     try {
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return next(new AppError('Invalid notebook ID', 400));
-        }
-
-        const notebook = await Notebook.findById(id);
+        const notebook = await Notebook.findById(req.params.id);
         if (!notebook) {
             return next(new AppError('Notebook not found', 404));   
         }
@@ -54,16 +53,11 @@ notebookRouter.get('/:id', async (req, res, next) => {
 });
 
 // Update a specific notebook by ID: PUT /api/notebooks/:id
-notebookRouter.put('/:id', async (req, res, next) => {
+notebookRouter.put('/:id', validateIdHandler, async (req, res, next) => {
     try {
-        const { id } = req.params;
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return next(new AppError('Invalid notebook ID', 400));
-        }
-        
         const { name, description } = req.body;
         const updatedNotebook = await Notebook.findByIdAndUpdate(
-            id,
+            req.params.id,
             { name, description },
             { new: true }
         );
@@ -77,14 +71,9 @@ notebookRouter.put('/:id', async (req, res, next) => {
 });
 
 // Delete a specific notebook by ID: DELETE /api/notebooks/:id
-notebookRouter.delete('/:id', async (req, res, next) => {
+notebookRouter.delete('/:id', validateIdHandler, async (req, res, next) => {
     try {
-        const { id } = req.params;
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return next(new AppError('Invalid notebook ID', 400));
-        }
-
-        const deletedNotebook = await Notebook.findByIdAndDelete(id);
+        const deletedNotebook = await Notebook.findByIdAndDelete(req.params.id);
         if (!deletedNotebook) {
             return next(new AppError('Notebook not found', 404));   
         }
