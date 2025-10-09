@@ -12,7 +12,7 @@ noteRouter.post('/', async (req, res, next) => {
     try {
         const { title, content, notebookId } = req.body;
         let validatedNotebookId = null;
-        if (!validatedNotebookId) {
+        if (!notebookId) {
             console.info({
                 message: 'Notebook Id note provided. Storing note without notebook association.'
             });
@@ -42,7 +42,7 @@ noteRouter.post('/', async (req, res, next) => {
             return next(new AppError("'Title', 'content' fields are required", 400));
         }
         
-        const newNote = new Note({ title, content });
+        const newNote = new Note({ title, content, validatedNotebookId });
         const noteExists = await Note.findOne({ title, content });
         if (noteExists) {
             return next(new AppError('Note with this title and content already exists', 400));
