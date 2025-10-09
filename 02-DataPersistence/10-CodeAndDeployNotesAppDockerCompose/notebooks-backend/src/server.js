@@ -1,12 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const { notebookRouter } = require('./routes');
 
 const app = express();
 const port = process.env.PORT || 3000;
-
-app.get('/api/notebooks', (req, res) => {
-    res.send('Hello from Notebooks Backend! new message');
-});
+app.use(bodyParser.json());
+app.use('/api/notebooks', notebookRouter);
 
 console.log('Connecting to MongoDB...');
 console.log('Using connection string:', process.env.DB_URL);
