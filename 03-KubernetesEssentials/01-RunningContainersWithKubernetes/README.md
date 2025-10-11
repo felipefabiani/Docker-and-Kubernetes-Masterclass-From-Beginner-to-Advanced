@@ -19,8 +19,6 @@ to set different content:
 
 `kubectl describe pod nginx`
 
-`kubectl run -it alpine --image=alpane:3.20 sh`
-
 `kubectl run -it alpine --image=alpine:3.20 sh`
 
 => `apk --update add curl`
@@ -34,3 +32,19 @@ to set different content:
 `kubectl get pods`
 
 `kubectl delete pod alpine`
+
+---
+
+`kubectl expose pod nginx --type=NodePort --port=80`
+
+`kubectl get service`
+
+`kubectl run -it alpine --image=alpane:3.20 sh`
+
+=> `apk --update add curl`
+
+=> `curl 10.107.130.74`
+
+=> `exit`
+
+`kubectl delete service nginx`
