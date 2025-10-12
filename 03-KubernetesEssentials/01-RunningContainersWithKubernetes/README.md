@@ -66,3 +66,45 @@ to set different content:
 `curl http://localhost:3000`
 
 `docker rm -f color-api`
+
+---
+
+`docker build -t felipefabiani/color-api:1.0.0 .`
+
+`docker login -u felipefabiani`
+
+`token xxxxxxxxxx`
+
+`kubectl run color-api --image=felipefabiani/color-api:1.0.0`
+
+`kubectl get pods`
+
+`kubectl logs color-api`
+
+`kubectl describe pod color-api`
+
+<pre>
+...
+Status:           Running
+IP:               10.244.0.10
+IPs:
+  IP:  10.244.0.10
+...  
+</pre>
+
+Running another container to access the color-api
+`kubectl run -it alpine --image=alpine:3.20 sh`
+
+==> ` apk --update add curl`
+
+==> `curl 10.244.0.10`
+
+Cleanning up pod
+
+`kubectl get pods`
+
+`kubectl delete pod --force=true alpine`
+
+`kubectl delete pod --force=true color-api`
+
+`kubectl get pods`
