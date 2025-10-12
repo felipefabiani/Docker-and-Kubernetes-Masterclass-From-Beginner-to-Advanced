@@ -48,3 +48,21 @@ to set different content:
 => `exit`
 
 `kubectl delete service nginx`
+
+`mkdir color-api`
+
+`cd color-api`
+
+`npm init -y`
+
+`npm i --save-exact express@4.19.2`
+
+`docker build -t color-api .`
+
+`docker run -d -p 3000:80 --name color-api color-api`
+
+`docker logs color-api`
+
+`curl http://localhost:3000`
+
+`docker rm -f color-api`
