@@ -11,8 +11,8 @@ metadata:
     description: "Nginx pod for learning purposes"
 spec:
   containers:
-  - image: nginx:1.27.0
-    name: nginx
+  - image: nginx:1.27.0-alpine
+    name: nginx-container
     ports:
     - containerPort: 80
     resources:

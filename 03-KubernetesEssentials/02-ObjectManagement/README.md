@@ -60,3 +60,9 @@ status:
 </pre>
 
 ---
+
+`kubectl replace -f .\nginx-pod.yaml`  <= will fail
+
+Cleaning up env
+
+`kubectl delete -f nginx-pod.yaml -f nginx-scv.yaml`
