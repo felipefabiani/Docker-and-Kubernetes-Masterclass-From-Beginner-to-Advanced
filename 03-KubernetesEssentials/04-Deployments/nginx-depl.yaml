@@ -4,6 +4,8 @@ metadata:
   name: nginx-deployment
   labels:
     app: nginx
+  annotations:
+    'kubernetes.io/change-cause': 'update nginx to tag 1.27.0-alpine'
 
 spec:
   replicas: 5

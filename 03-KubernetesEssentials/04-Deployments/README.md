@@ -147,9 +147,122 @@ Events:
   Normal  Created    7m47s  kubelet            Created container: nginx
   Normal  Started    7m46s  kubelet            Started container nginx
 </pre>
+
+---
+
+`kubectl rollout history deployment/nginx-deployment`
+
 <pre>
+$ kubectl rollout history deployment/nginx-deployment
+deployment.apps/nginx-deployment 
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
 </pre>
+
 <pre>
+$ kubectl get pod --watch
+NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-698b844dc4-4l7zf   1/1     Running   0          15m
+nginx-deployment-698b844dc4-bwpkm   1/1     Running   0          15m
+nginx-deployment-698b844dc4-hnvqf   1/1     Running   0          15m
+nginx-deployment-698b844dc4-kjfmv   1/1     Running   0          15m
+nginx-deployment-698b844dc4-rmjd6   1/1     Running   0          15m
+</pre>
+
+`kubectl rollout undo deployment nginx-deployment`
+
+<pre>
+$ kubectl get pod --watch
+NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-698b844dc4-4l7zf   1/1     Running   0          15m
+nginx-deployment-698b844dc4-bwpkm   1/1     Running   0          15m
+nginx-deployment-698b844dc4-hnvqf   1/1     Running   0          15m
+nginx-deployment-698b844dc4-kjfmv   1/1     Running   0          15m
+nginx-deployment-698b844dc4-rmjd6   1/1     Running   0          15m
+nginx-deployment-65d974654-swrh4    0/1     Pending   0          0s
+nginx-deployment-65d974654-pqpzm    0/1     Pending   0          0s
+nginx-deployment-65d974654-swrh4    0/1     Pending   0          0s
+nginx-deployment-698b844dc4-4l7zf   1/1     Terminating   0          16m
+nginx-deployment-65d974654-pqpzm    0/1     Pending       0          0s
+nginx-deployment-65d974654-swrh4    0/1     ContainerCreating   0          0s
+nginx-deployment-65d974654-qmh8k    0/1     Pending             0          0s
+nginx-deployment-698b844dc4-4l7zf   1/1     Terminating         0          16m
+nginx-deployment-65d974654-qmh8k    0/1     Pending             0          0s
+nginx-deployment-65d974654-pqpzm    0/1     ContainerCreating   0          0s
+nginx-deployment-65d974654-qmh8k    0/1     ContainerCreating   0          0s
+nginx-deployment-698b844dc4-4l7zf   0/1     Completed           0          16m
+nginx-deployment-698b844dc4-4l7zf   0/1     Completed           0          17m
+nginx-deployment-698b844dc4-4l7zf   0/1     Completed           0          17m
+nginx-deployment-65d974654-pqpzm    1/1     Running             0          2s
+nginx-deployment-65d974654-swrh4    1/1     Running             0          2s
+nginx-deployment-65d974654-qmh8k    1/1     Running             0          2s
+nginx-deployment-698b844dc4-rmjd6   1/1     Terminating         0          17m
+nginx-deployment-698b844dc4-rmjd6   1/1     Terminating         0          17m
+nginx-deployment-65d974654-7vkcq    0/1     Pending             0          0s
+nginx-deployment-65d974654-7vkcq    0/1     Pending             0          0s
+nginx-deployment-698b844dc4-hnvqf   1/1     Terminating         0          16m
+nginx-deployment-698b844dc4-bwpkm   1/1     Terminating         0          16m
+nginx-deployment-65d974654-7vkcq    0/1     ContainerCreating   0          0s
+nginx-deployment-65d974654-gb29n    0/1     Pending             0          0s
+nginx-deployment-65d974654-gb29n    0/1     Pending             0          0s
+nginx-deployment-698b844dc4-bwpkm   1/1     Terminating         0          16m
+nginx-deployment-698b844dc4-hnvqf   1/1     Terminating         0          16m
+nginx-deployment-65d974654-gb29n    0/1     ContainerCreating   0          0s
+nginx-deployment-698b844dc4-rmjd6   0/1     Completed           0          17m
+nginx-deployment-698b844dc4-bwpkm   0/1     Completed           0          16m
+nginx-deployment-698b844dc4-rmjd6   0/1     Completed           0          17m
+nginx-deployment-698b844dc4-rmjd6   0/1     Completed           0          17m
+nginx-deployment-698b844dc4-hnvqf   0/1     Completed           0          16m
+nginx-deployment-698b844dc4-bwpkm   0/1     Completed           0          16m
+nginx-deployment-698b844dc4-bwpkm   0/1     Completed           0          16m
+nginx-deployment-65d974654-7vkcq    1/1     Running             0          2s
+nginx-deployment-698b844dc4-hnvqf   0/1     Completed           0          17m
+nginx-deployment-698b844dc4-hnvqf   0/1     Completed           0          17m
+nginx-deployment-698b844dc4-kjfmv   1/1     Terminating         0          17m
+nginx-deployment-698b844dc4-hnvqf   0/1     Completed           0          17m
+nginx-deployment-698b844dc4-kjfmv   1/1     Terminating         0          17m
+nginx-deployment-65d974654-gb29n    1/1     Running             0          2s
+nginx-deployment-698b844dc4-kjfmv   0/1     Completed           0          17m
+nginx-deployment-698b844dc4-kjfmv   0/1     Completed           0          17m
+nginx-deployment-698b844dc4-kjfmv   0/1     Completed           0          17m
+</pre>
+
+Pods are back from the new hash (698b844dc4) to the previous hash (65d974654)
+
+<pre>
+$ kubectl get pods
+NAME                               READY   STATUS    RESTARTS   AGE
+nginx-deployment-65d974654-7vkcq   1/1     Running   0          74s
+nginx-deployment-65d974654-gb29n   1/1     Running   0          74s
+nginx-deployment-65d974654-pqpzm   1/1     Running   0          76s
+nginx-deployment-65d974654-qmh8k   1/1     Running   0          76s
+nginx-deployment-65d974654-swrh4   1/1     Running   0          76s
+</pre>
+
+<pre>
+$ kubectl rollout history deployment/nginx-deployment
+deployment.apps/nginx-deployment 
+REVISION  CHANGE-CAUSE
+2         <none>
+3         <none>
+</pre>
+
+Adding annotation do the deployment file and applying changes
+
+<pre>
+$ kubectl apply -f nginx-depl.yaml 
+deployment.apps/nginx-deployment configured
+</pre>
+
+`kubectl rollout history deployment/nginx-deployment`
+
+<pre>
+$ kubectl rollout history deployment/nginx-deployment
+deployment.apps/nginx-deployment 
+REVISION  CHANGE-CAUSE
+3         <none>
+4         update nginx to tag 1.27.0-alpine
 </pre>
 <pre>
 </pre>
