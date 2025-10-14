@@ -37,3 +37,111 @@ nginx-replicaset-ljbxf   1/1     Running   0          4m15s
 
 `kubectl describe rs nginx-replicaset`
 
+---
+
+Open 3 terminals
+
+first: `kubectl get pod --watch`
+<pre>
+$ kubectl get pod --watch
+NAME                     READY   STATUS    RESTARTS   AGE
+nginx-replicaset-848rl   1/1     Running   0          6m50s
+nginx-replicaset-g8rzd   1/1     Running   0          10m
+nginx-replicaset-ljbxf   1/1     Running   0          10m
+</pre>
+
+second: `kubectl get rs --watch`
+<pre>
+$ kubectl get rs --watch
+NAME               DESIRED   CURRENT   READY   AGE
+nginx-replicaset   3         3         3       11m
+</pre>
+
+third: `kubectl apply -f nginx-rs.yaml`
+
+<pre>
+$ kubectl apply -f nginx-rs.yaml 
+replicaset.apps/nginx-replicaset configured
+</pre>
+
+<pre>
+$ kubectl get rs --watch
+NAME               DESIRED   CURRENT   READY   AGE
+nginx-replicaset   3         3         3       11m
+nginx-replicaset   3         3         3       13m
+nginx-replicaset   3         3         3       13m
+</pre>
+
+<pre>
+$ kubectl get pod --watch
+NAME                     READY   STATUS    RESTARTS   AGE
+nginx-replicaset-848rl   1/1     Running   0          6m50s
+nginx-replicaset-g8rzd   1/1     Running   0          10m
+nginx-replicaset-ljbxf   1/1     Running   0          10m
+</pre>
+
+Change only reflected to rs because there are 3 containers running.
+
+`kubectl delete pod nginx-replicaset-848rl`
+
+
+<pre>
+$ kubectl get rs --watch
+NAME               DESIRED   CURRENT   READY   AGE
+nginx-replicaset   3         3         3       11m
+nginx-replicaset   3         3         3       13m
+nginx-replicaset   3         3         3       13m
+nginx-replicaset   3         2         2       17m
+nginx-replicaset   3         3         2       17m
+nginx-replicaset   3         3         3       17m
+</pre>
+
+<pre>
+$ kubectl get pod --watch
+NAME                     READY   STATUS    RESTARTS   AGE
+nginx-replicaset-848rl   1/1     Running   0          6m50s
+nginx-replicaset-g8rzd   1/1     Running   0          10m
+nginx-replicaset-ljbxf   1/1     Running   0          10m
+nginx-replicaset-848rl   1/1     Terminating   0          14m
+nginx-replicaset-5j6ls   0/1     Pending       0          0s
+nginx-replicaset-848rl   1/1     Terminating   0          14m
+nginx-replicaset-5j6ls   0/1     Pending       0          0s
+nginx-replicaset-5j6ls   0/1     ContainerCreating   0          0s
+nginx-replicaset-848rl   0/1     Completed           0          14m
+nginx-replicaset-5j6ls   1/1     Running             0          1s
+nginx-replicaset-848rl   0/1     Completed           0          14m
+nginx-replicaset-848rl   0/1     Completed           0          14m
+</pre>
+
+Third: `kubectl describe pod nginx-replicaset-5j6ls | grep Image`
+
+<pre>
+$ kubectl describe pod nginx-replicaset-5j6ls | grep Image
+    Image:          nginx:1.27.0-alpine                      <===== new image
+    Image ID:       docker-pullable://nginx@sha256:208b70eefac13ee9be00e486f79c695b15cef861c680527171a27d253d834be9
+</pre>
+
+
+<pre>
+</pre>
+
+
+<pre>
+</pre>
+<pre>
+</pre>
+<pre>
+</pre>
+<pre>
+</pre>
+<pre>
+</pre>
+<pre>
+</pre>
+<pre>
+</pre>
+<pre>
+</pre>
+
+
+
