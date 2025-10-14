@@ -264,6 +264,7 @@ REVISION  CHANGE-CAUSE
 3         <none>
 4         update nginx to tag 1.27.0-alpine
 </pre>
-<pre>
-</pre>
 
+Cleaning up env.
+
+`kubectl delete -f nginx-depl.yaml`
