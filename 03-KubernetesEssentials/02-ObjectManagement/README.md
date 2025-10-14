@@ -66,3 +66,24 @@ status:
 Cleaning up env
 
 `kubectl delete -f nginx-pod.yaml -f nginx-scv.yaml`
+
+---
+
+`kubectl apply -f .\02-ObjectManagement\`
+
+<pre>
+PS C:\Learning\Coursera\Docker-and-Kubernetes\03-KubernetesEssentials> kubectl apply -f .\02-ObjectManagement\
+pod/nginx-pod created
+service/nginx-svc created
+</pre>
+
+`kubectl diff -f 02-ObjectManagement`
+
+`kubectl apply -f 02-ObjectManagement`
+<pre>
+kubectl apply -f 02-ObjectManagement
+pod/nginx-pod configured
+service/nginx-svc unchanged
+</pre>
+
+`kubectl describe pod nginx-pod`
