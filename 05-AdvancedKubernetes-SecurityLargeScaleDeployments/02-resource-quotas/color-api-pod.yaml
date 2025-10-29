@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: color-api
+  namespace: dev
+  labels:
+    app: color-api
+spec:
+  containers:
+  - name: color-api
+    image: felipefabiani/color-api:1.1.0
+    resources:
+      requests:
+        cpu: "200m"
+        memory: "256Mi"
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
+    ports:
+      - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: color-api-svc
+  namespace: dev
+spec:
+  type: ClusterIP
+  selector:
+    app: color-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
