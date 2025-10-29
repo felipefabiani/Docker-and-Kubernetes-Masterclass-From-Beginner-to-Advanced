@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: empty-dir-demo
+  labels:
+    app.kubernetes.io/name: empty-dir-demo
+spec:
+  containers:
+    - name: empty-dir-writer
+      image: busybox:1.36.1
+      command: ["/bin/sh", "-c", "while true; do echo Hello from the emptyDir demo! > /usr/share/temp/hello.txt; sleep 10; done"]
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+      volumeMounts:
+        - name: temporary-storage
+          mountPath: /usr/share/temp
+    - name: empty-dir-reader
+      image: busybox:1.36.1
+      command: ["/bin/sh", "-c", "while true; do echo Hello from the emptyDir demo! > /usr/share/temp/hello.txt; sleep 10; done"]
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+      volumeMounts:
+        - name: temporary-storage
+          mountPath: /temp
+          readOnly: true
+  volumes:
+    - name: temporary-storage
+      emptyDir: {}
