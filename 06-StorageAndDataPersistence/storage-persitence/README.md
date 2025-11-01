@@ -9,6 +9,3 @@ docker@minikube:~$ sudo chmod 777 /mnt/disks/local1
 docker@minikube:~$ exit
 logout
 </pre>
-
-<pre>
-</pre>
