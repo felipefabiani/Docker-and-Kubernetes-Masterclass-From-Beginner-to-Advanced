@@ -1,0 +1,19 @@
+# For documentation, equivalent to the imperative command:
+# kubectl expose pod nginx-pod --type=NodePort --port=80
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+  labels:
+    app: nginx
+  annotations:
+    description: "Nginx service for learning purposes"
+spec:
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    app: nginx
